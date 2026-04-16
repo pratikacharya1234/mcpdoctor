@@ -1,0 +1,61 @@
+{
+  "name": "mcpdoctor",
+  "version": "0.1.0",
+  "description": "MCP Server Conflict Detector & Profiler — detect tool name collisions, measure latency, estimate context window usage across your MCP stack",
+  "main": "dist/index.js",
+  "bin": {
+    "mcpdoctor": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "dev": "bun run src/index.ts",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "cursor",
+    "cline",
+    "ai",
+    "agent",
+    "cli",
+    "developer-tools",
+    "conflict",
+    "profiler",
+    "latency"
+  ],
+  "author": "Pratik Acharya <acharyapratik214@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pratikacharya1234/mcpdoctor"
+  },
+  "homepage": "https://github.com/pratikacharya1234/mcpdoctor#readme",
+  "bugs": {
+    "url": "https://github.com/pratikacharya1234/mcpdoctor/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "boxen": "^7.1.1",
+    "chalk": "^5.4.1",
+    "cli-table3": "^0.6.5",
+    "commander": "^13.1.0",
+    "fastest-levenshtein": "^1.0.16",
+    "ora": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module"
+}

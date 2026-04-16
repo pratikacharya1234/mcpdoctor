@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fs-tmp": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"]
+    },
+    "fs-home": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home"]
+    }
+  }
+}
