@@ -1,6 +1,6 @@
 {
   "name": "mcpfix",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP Server Conflict Detector & Fixer — detect & repair tool name collisions, measure latency, estimate context window usage across your MCP stack",
   "main": "dist/index.js",
   "bin": {
