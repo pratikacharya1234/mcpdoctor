@@ -52,14 +52,16 @@ program
       }
 
       if (configs.length === 0) {
-        spinner.fail("No MCP configs found. Use --config to specify a config file.");
+        spinner.stop();
+        process.stderr.write("[ERR] No MCP configs found. Use --config to specify a config file.\n");
         process.exit(1);
       }
 
       const servers = getAllServers(configs);
 
       if (servers.length === 0) {
-        spinner.fail("No MCP servers found in any config.");
+        spinner.stop();
+        process.stderr.write("[ERR] No MCP servers found in any config.\n");
         process.exit(1);
       }
 
@@ -112,8 +114,10 @@ program
       );
       process.exit(hasErrors || collisions.length > 0 ? 1 : 0);
     } catch (err) {
-      spinner.fail("Fatal error");
-      process.stderr.write((err instanceof Error ? err.message : String(err)) + "\n");
+      spinner.stop();
+      process.stderr.write(
+        "[ERR] Fatal: " + (err instanceof Error ? err.message : String(err)) + "\n"
+      );
       process.exit(2);
     }
   });
