@@ -1,12 +1,21 @@
 # mcpfix — MCP Server Conflict Detector & Fixer
 
-[![npm version](https://badge.fury.io/js/mcpfix.svg)](https://www.npmjs.com/package/mcpfix)
+<p align="center">
+  <img src="docs/demo.svg" alt="mcpfix demo — detects tool name collisions, profiles latency, estimates context window usage" />
+</p>
+
+[![npm version](https://img.shields.io/npm/v/mcpfix.svg?color=cb3837&logo=npm)](https://www.npmjs.com/package/mcpfix)
+[![npm downloads](https://img.shields.io/npm/dm/mcpfix.svg?color=cb3837&logo=npm)](https://www.npmjs.com/package/mcpfix)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org)
 [![GitHub stars](https://img.shields.io/github/stars/pratikacharya1234/mcpdoctor?style=social)](https://github.com/pratikacharya1234/mcpdoctor)
 
 > Detect tool name collisions, profile latency, and audit context window usage across Claude, Cursor, and Cline MCP servers.
+
+```bash
+npx mcpfix
+```
 
 ## The Problem
 
@@ -83,6 +92,10 @@ npx mcpfix --roast
 # Custom token budget
 npx mcpfix --budget 128000
 ```
+
+<p align="center">
+  <img src="docs/demo-roast.svg" alt="mcpfix --roast output — tier scoring and viral-ready diagnostics" />
+</p>
 
 ## Options
 

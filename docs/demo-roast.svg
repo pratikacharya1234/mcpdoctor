@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="665" height="344" viewBox="0 0 665 344" font-family="'SF Mono','Menlo','Consolas',monospace" font-size="14">
+<rect width="665" height="344" rx="8" ry="8" fill="#1E2127"/>
+<rect width="665" height="28" rx="8" ry="8" fill="#2A2E38"/>
+<circle cx="16" cy="14" r="6" fill="#FF5F56"/>
+<circle cx="36" cy="14" r="6" fill="#FFBD2E"/>
+<circle cx="56" cy="14" r="6" fill="#27C93F"/>
+<text x="332" y="18" text-anchor="middle" fill="#9DA5B4" font-size="12">mcpfix --roast</text>
+<text x="20" y="44" xml:space="preserve">
+<tspan x="20" fill="#E06C75">╭────────────────────────╮</tspan>
+</text>
+<text x="20" y="64" xml:space="preserve">
+<tspan x="20" fill="#E06C75">│</tspan>
+<tspan x="28" fill="#ABB2BF">                        </tspan>
+<tspan x="230" fill="#E06C75">│</tspan>
+</text>
+<text x="20" y="84" xml:space="preserve">
+<tspan x="20" fill="#E06C75">│</tspan>
+<tspan x="28" fill="#ABB2BF">   </tspan>
+<tspan x="53" fill="#E06C75" font-weight="bold"> MCP Roast Report </tspan>
+<tspan x="204" fill="#ABB2BF">   </tspan>
+<tspan x="230" fill="#E06C75">│</tspan>
+</text>
+<text x="20" y="104" xml:space="preserve">
+<tspan x="20" fill="#E06C75">│</tspan>
+<tspan x="28" fill="#ABB2BF">                        </tspan>
+<tspan x="230" fill="#E06C75">│</tspan>
+</text>
+<text x="20" y="124" xml:space="preserve">
+<tspan x="20" fill="#E06C75">╰────────────────────────╯</tspan>
+</text>
+<text x="20" y="144" xml:space="preserve">
+</text>
+<text x="20" y="164" xml:space="preserve">
+<tspan x="20" fill="#E06C75">  [!] 2 duplicate processes? This isn&#x27;t redundancy, it&#x27;s chaos</tspan>
+</text>
+<text x="20" y="184" xml:space="preserve">
+<tspan x="20" fill="#E06C75">  [collision] 18 collisions detected. Your AI is basically flipping a coin</tspan>
+</text>
+<text x="20" y="204" xml:space="preserve">
+</text>
+<text x="20" y="224" xml:space="preserve">
+<tspan x="20" fill="#5C6370">  Your setup is </tspan>
+<tspan x="154" fill="#5C6370" font-weight="bold">35% vibe, 65% slop</tspan>
+<tspan x="305" fill="#5C6370">.</tspan>
+</text>
+<text x="20" y="244" xml:space="preserve">
+</text>
+<text x="20" y="264" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">  </tspan>
+<tspan x="36" fill="#ABB2BF" font-weight="bold">Tier:</tspan>
+<tspan x="78" fill="#ABB2BF"> </tspan>
+<tspan x="87" fill="#E5C07B" font-weight="bold">C  -- MCP Slopper</tspan>
+</text>
+<text x="20" y="284" xml:space="preserve">
+</text>
+<text x="20" y="304" xml:space="preserve">
+<tspan x="20" fill="#5C6370">  Fix these 14 issue(s) to reach next tier. Run: </tspan>
+<tspan x="431" fill="#5C6370" font-weight="bold">mcpfix --fix</tspan>
+</text>
+</svg>

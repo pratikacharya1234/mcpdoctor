@@ -10,6 +10,7 @@
     "build": "tsup src/index.ts --format esm --dts --clean",
     "dev": "bun run src/index.ts",
     "lint": "tsc --noEmit",
+    "demo": "node scripts/build-demo.mjs",
     "prepublishOnly": "npm run build"
   },
   "files": [

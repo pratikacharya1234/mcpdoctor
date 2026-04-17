@@ -1,0 +1,311 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="976" height="1484" viewBox="0 0 976 1484" font-family="'SF Mono','Menlo','Consolas',monospace" font-size="14">
+<rect width="976" height="1484" rx="8" ry="8" fill="#1E2127"/>
+<rect width="976" height="28" rx="8" ry="8" fill="#2A2E38"/>
+<circle cx="16" cy="14" r="6" fill="#FF5F56"/>
+<circle cx="36" cy="14" r="6" fill="#FFBD2E"/>
+<circle cx="56" cy="14" r="6" fill="#27C93F"/>
+<text x="488" y="18" text-anchor="middle" fill="#9DA5B4" font-size="12">npx mcpfix</text>
+<text x="20" y="44" xml:space="preserve">
+<tspan x="20" fill="#56B6C2">╭────────────────────────────────────────────────────────╮</tspan>
+</text>
+<text x="20" y="64" xml:space="preserve">
+<tspan x="20" fill="#56B6C2">│</tspan>
+<tspan x="28" fill="#ABB2BF">                                                        </tspan>
+<tspan x="498" fill="#56B6C2">│</tspan>
+</text>
+<text x="20" y="84" xml:space="preserve">
+<tspan x="20" fill="#56B6C2">│</tspan>
+<tspan x="28" fill="#ABB2BF">   </tspan>
+<tspan x="53" fill="#56B6C2" font-weight="bold"> MCPFix </tspan>
+<tspan x="120" fill="#5C6370">-- MCP Server Conflict Detector &amp; Profiler</tspan>
+<tspan x="473" fill="#ABB2BF">   </tspan>
+<tspan x="498" fill="#56B6C2">│</tspan>
+</text>
+<text x="20" y="104" xml:space="preserve">
+<tspan x="20" fill="#56B6C2">│</tspan>
+<tspan x="28" fill="#ABB2BF">                                                        </tspan>
+<tspan x="498" fill="#56B6C2">│</tspan>
+</text>
+<text x="20" y="124" xml:space="preserve">
+<tspan x="20" fill="#56B6C2">╰────────────────────────────────────────────────────────╯</tspan>
+</text>
+<text x="20" y="144" xml:space="preserve">
+</text>
+<text x="20" y="164" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">CONFIGS:</tspan>
+</text>
+<text x="20" y="184" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">  </tspan>
+<tspan x="36" fill="#98C379">*</tspan>
+<tspan x="45" fill="#ABB2BF"> Custom: </tspan>
+<tspan x="120" fill="#5C6370">test-collision-config.json</tspan>
+</text>
+<text x="20" y="204" xml:space="preserve">
+</text>
+<text x="20" y="224" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">LATENCY PROFILE:</tspan>
+</text>
+<text x="20" y="244" xml:space="preserve">
+<tspan x="20" fill="#5C6370">┌─────────</tspan>
+<tspan x="104" fill="#5C6370">┬───────</tspan>
+<tspan x="171" fill="#5C6370">┬────────────</tspan>
+<tspan x="280" fill="#5C6370">┬──────────</tspan>
+<tspan x="372" fill="#5C6370">┬──────────────┐</tspan>
+</text>
+<text x="20" y="264" xml:space="preserve">
+<tspan x="20" fill="#5C6370">│</tspan>
+<tspan x="28" fill="#ABB2BF"> </tspan>
+<tspan x="36" fill="#56B6C2">Server</tspan>
+<tspan x="87" fill="#ABB2BF">  </tspan>
+<tspan x="104" fill="#5C6370">│</tspan>
+<tspan x="112" fill="#ABB2BF"> </tspan>
+<tspan x="120" fill="#56B6C2">Tools</tspan>
+<tspan x="162" fill="#ABB2BF"> </tspan>
+<tspan x="171" fill="#5C6370">│</tspan>
+<tspan x="179" fill="#ABB2BF"> </tspan>
+<tspan x="188" fill="#56B6C2">Cold Start</tspan>
+<tspan x="272" fill="#ABB2BF"> </tspan>
+<tspan x="280" fill="#5C6370">│</tspan>
+<tspan x="288" fill="#ABB2BF"> </tspan>
+<tspan x="297" fill="#56B6C2">Warm RTT</tspan>
+<tspan x="364" fill="#ABB2BF"> </tspan>
+<tspan x="372" fill="#5C6370">│</tspan>
+<tspan x="381" fill="#ABB2BF"> </tspan>
+<tspan x="389" fill="#56B6C2">Status</tspan>
+<tspan x="440" fill="#ABB2BF">       </tspan>
+<tspan x="498" fill="#5C6370">│</tspan>
+</text>
+<text x="20" y="284" xml:space="preserve">
+<tspan x="20" fill="#5C6370">├─────────</tspan>
+<tspan x="104" fill="#5C6370">┼───────</tspan>
+<tspan x="171" fill="#5C6370">┼────────────</tspan>
+<tspan x="280" fill="#5C6370">┼──────────</tspan>
+<tspan x="372" fill="#5C6370">┼──────────────┤</tspan>
+</text>
+<text x="20" y="304" xml:space="preserve">
+<tspan x="20" fill="#5C6370">│</tspan>
+<tspan x="28" fill="#ABB2BF"> fs-tmp  </tspan>
+<tspan x="104" fill="#5C6370">│</tspan>
+<tspan x="112" fill="#ABB2BF"> 14    </tspan>
+<tspan x="171" fill="#5C6370">│</tspan>
+<tspan x="179" fill="#ABB2BF"> </tspan>
+<tspan x="188" fill="#E5C07B">1588ms</tspan>
+<tspan x="238" fill="#ABB2BF">     </tspan>
+<tspan x="280" fill="#5C6370">│</tspan>
+<tspan x="288" fill="#ABB2BF"> </tspan>
+<tspan x="297" fill="#98C379">14ms</tspan>
+<tspan x="330" fill="#ABB2BF">     </tspan>
+<tspan x="372" fill="#5C6370">│</tspan>
+<tspan x="381" fill="#ABB2BF"> </tspan>
+<tspan x="389" fill="#98C379">[OK]</tspan>
+<tspan x="423" fill="#ABB2BF"> healthy </tspan>
+<tspan x="498" fill="#5C6370">│</tspan>
+</text>
+<text x="20" y="324" xml:space="preserve">
+<tspan x="20" fill="#5C6370">├─────────</tspan>
+<tspan x="104" fill="#5C6370">┼───────</tspan>
+<tspan x="171" fill="#5C6370">┼────────────</tspan>
+<tspan x="280" fill="#5C6370">┼──────────</tspan>
+<tspan x="372" fill="#5C6370">┼──────────────┤</tspan>
+</text>
+<text x="20" y="344" xml:space="preserve">
+<tspan x="20" fill="#5C6370">│</tspan>
+<tspan x="28" fill="#ABB2BF"> fs-home </tspan>
+<tspan x="104" fill="#5C6370">│</tspan>
+<tspan x="112" fill="#ABB2BF"> 14    </tspan>
+<tspan x="171" fill="#5C6370">│</tspan>
+<tspan x="179" fill="#ABB2BF"> </tspan>
+<tspan x="188" fill="#E5C07B">1574ms</tspan>
+<tspan x="238" fill="#ABB2BF">     </tspan>
+<tspan x="280" fill="#5C6370">│</tspan>
+<tspan x="288" fill="#ABB2BF"> </tspan>
+<tspan x="297" fill="#98C379">13ms</tspan>
+<tspan x="330" fill="#ABB2BF">     </tspan>
+<tspan x="372" fill="#5C6370">│</tspan>
+<tspan x="381" fill="#ABB2BF"> </tspan>
+<tspan x="389" fill="#98C379">[OK]</tspan>
+<tspan x="423" fill="#ABB2BF"> healthy </tspan>
+<tspan x="498" fill="#5C6370">│</tspan>
+</text>
+<text x="20" y="364" xml:space="preserve">
+<tspan x="20" fill="#5C6370">└─────────</tspan>
+<tspan x="104" fill="#5C6370">┴───────</tspan>
+<tspan x="171" fill="#5C6370">┴────────────</tspan>
+<tspan x="280" fill="#5C6370">┴──────────</tspan>
+<tspan x="372" fill="#5C6370">┴──────────────┘</tspan>
+</text>
+<text x="20" y="384" xml:space="preserve">
+</text>
+<text x="20" y="404" xml:space="preserve">
+<tspan x="20" fill="#E06C75" font-weight="bold">CONFLICTS DETECTED:</tspan>
+</text>
+<text x="20" y="424" xml:space="preserve">
+</text>
+<text x="20" y="444" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">  </tspan>
+<tspan x="36" fill="#ABB2BF"> EXACT </tspan>
+<tspan x="95" fill="#ABB2BF"> </tspan>
+<tspan x="104" fill="#ABB2BF" font-weight="bold">read_file</tspan>
+</text>
+<text x="20" y="464" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">    Servers: fs-tmp, fs-home</tspan>
+</text>
+<text x="20" y="484" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">    </tspan>
+<tspan x="53" fill="#5C6370">Fix:</tspan>
+<tspan x="87" fill="#ABB2BF"> run --fix to rename &quot;fs-home&quot; server key, or rename tool in fs-home&#x27;s source</tspan>
+</text>
+<text x="20" y="504" xml:space="preserve">
+</text>
+<text x="20" y="524" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">  </tspan>
+<tspan x="36" fill="#ABB2BF"> EXACT </tspan>
+<tspan x="95" fill="#ABB2BF"> </tspan>
+<tspan x="104" fill="#ABB2BF" font-weight="bold">read_text_file</tspan>
+</text>
+<text x="20" y="544" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">    Servers: fs-tmp, fs-home</tspan>
+</text>
+<text x="20" y="564" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">    </tspan>
+<tspan x="53" fill="#5C6370">Fix:</tspan>
+<tspan x="87" fill="#ABB2BF"> run --fix to rename &quot;fs-home&quot; server key, or rename tool in fs-home&#x27;s source</tspan>
+</text>
+<text x="20" y="584" xml:space="preserve">
+</text>
+<text x="20" y="604" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="624" xml:space="preserve">
+</text>
+<text x="20" y="644" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="664" xml:space="preserve">
+</text>
+<text x="20" y="684" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="704" xml:space="preserve">
+</text>
+<text x="20" y="724" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="744" xml:space="preserve">
+</text>
+<text x="20" y="764" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="784" xml:space="preserve">
+</text>
+<text x="20" y="804" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="824" xml:space="preserve">
+</text>
+<text x="20" y="844" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="864" xml:space="preserve">
+</text>
+<text x="20" y="884" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="904" xml:space="preserve">
+</text>
+<text x="20" y="924" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="944" xml:space="preserve">
+</text>
+<text x="20" y="964" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="984" xml:space="preserve">
+</text>
+<text x="20" y="1004" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="1024" xml:space="preserve">
+</text>
+<text x="20" y="1044" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more exact collisions)</tspan>
+</text>
+<text x="20" y="1064" xml:space="preserve">
+</text>
+<text x="20" y="1084" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">  </tspan>
+<tspan x="36" fill="#3E424D"> SIMILAR </tspan>
+<tspan x="112" fill="#ABB2BF"> </tspan>
+<tspan x="120" fill="#ABB2BF" font-weight="bold">read_file ~ write_file</tspan>
+</text>
+<text x="20" y="1104" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">    Servers: fs-tmp, fs-home</tspan>
+</text>
+<text x="20" y="1124" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">    Similarity: 60%</tspan>
+</text>
+<text x="20" y="1144" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">    </tspan>
+<tspan x="53" fill="#5C6370">Fix:</tspan>
+<tspan x="87" fill="#ABB2BF"> Near-identical names risk LLM misrouting -- consider namespacing: fs-tmp_read_file, fs-home_write_file</tspan>
+</text>
+<text x="20" y="1164" xml:space="preserve">
+</text>
+<text x="20" y="1184" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more similar collisions)</tspan>
+</text>
+<text x="20" y="1204" xml:space="preserve">
+</text>
+<text x="20" y="1224" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more similar collisions)</tspan>
+</text>
+<text x="20" y="1244" xml:space="preserve">
+</text>
+<text x="20" y="1264" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">   </tspan>
+<tspan x="45" fill="#5C6370">... (1 more similar collisions)</tspan>
+</text>
+<text x="20" y="1284" xml:space="preserve">
+</text>
+<text x="20" y="1304" xml:space="preserve">
+<tspan x="20" fill="#56B6C2" font-weight="bold">CONTEXT WINDOW:</tspan>
+</text>
+<text x="20" y="1324" xml:space="preserve">
+</text>
+<text x="20" y="1344" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">  [</tspan>
+<tspan x="45" fill="#98C379">=</tspan>
+<tspan x="53" fill="#5C6370">-----------------------------</tspan>
+<tspan x="297" fill="#ABB2BF">] 1.96%</tspan>
+</text>
+<text x="20" y="1364" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">  Tools: 28 | Tokens: 3.9k / 200.0k</tspan>
+</text>
+<text x="20" y="1384" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">  Risk: </tspan>
+<tspan x="87" fill="#98C379">LOW</tspan>
+</text>
+<text x="20" y="1404" xml:space="preserve">
+<tspan x="20" fill="#ABB2BF">  Remaining: ~196.1k tokens (~1401 more tools at avg 140 tok/tool)</tspan>
+</text>
+<text x="20" y="1424" xml:space="preserve">
+</text>
+<text x="20" y="1444" xml:space="preserve">
+<tspan x="20" fill="#E5C07B">Summary: 2 servers, 28 tools, 2 healthy, 18 conflicts</tspan>
+</text>
+</svg>
