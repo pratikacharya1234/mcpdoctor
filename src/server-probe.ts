@@ -11,39 +11,10 @@ const MAX_CONCURRENT_PROBES = 6;
 const SLOW_COLD_MS = 2_000;
 /** Warm RTT threshold above which a server is flagged "slow". */
 const SLOW_WARM_MS = 800;
-
-/**
- * Create a transport, attach a stderr collector before the process is spawned,
- * then connect a client. Returns the client and a zero-argument accessor that
- * returns whatever the server has written to stderr so far (capped at 512 bytes).
- *
- * The SDK creates the PassThrough stream in the constructor (before start()),
- * so listeners attached here will receive all data without any race condition.
- */
-async function connectWithStderrCapture(config: MCPServerConfig): Promise<{
-  client: Client;
-  getStderr: () => string;
-}> {
-  const transport = new StdioClientTransport({
-    command: config.command,
-    args: config.args,
-    env: config.env,
-    stderr: "pipe",
-  });
-
-  const chunks: Buffer[] = [];
-  transport.stderr?.on("data", (chunk: Buffer) => chunks.push(chunk));
-  const getStderr = (): string =>
-    Buffer.concat(chunks).toString("utf-8").trim().slice(0, 512);
-
-  const client = new Client(
-    { name: "mcpdoctor", version: "0.1.0" },
-    { capabilities: {} }
-  );
-
-  await client.connect(transport);
-  return { client, getStderr };
-}
+/** Hard cap on retained stderr bytes per probe — prevents unbounded RSS growth from chatty servers. */
+const MAX_STDERR_BYTES = 4096;
+/** Maximum stderr length included in error messages. */
+const STDERR_SNIPPET_BYTES = 512;
 
 async function fetchTools(client: Client): Promise<MCPTool[]> {
   const result = await client.listTools();
@@ -55,26 +26,62 @@ async function fetchTools(client: Client): Promise<MCPTool[]> {
 }
 
 export async function probeServer(config: MCPServerConfig): Promise<ServerProfile> {
+  let transport: StdioClientTransport | undefined;
   let client: Client | undefined;
   let getStderr: () => string = () => "";
   const t0 = performance.now();
 
   try {
-    const connected = await Promise.race([
-      connectWithStderrCapture(config),
-      new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error("Connection timeout")), PROBE_TIMEOUT_MS)
-      ),
-    ]);
-    client = connected.client;
-    getStderr = connected.getStderr;
+    // Transport is created *before* the timeout race so the timeout branch has
+    // a handle to close the child process instead of orphaning it.
+    transport = new StdioClientTransport({
+      command: config.command,
+      args: config.args,
+      env: config.env,
+      stderr: "pipe",
+    });
 
-    // Cold start: connection + first tools/list — this is what the user waits for on MCP client launch.
+    // Stderr is collected into a bounded buffer; once MAX_STDERR_BYTES is
+    // reached further chunks are dropped so a misbehaving server cannot grow
+    // RSS without bound during the probe window.
+    const chunks: Buffer[] = [];
+    let stderrBytes = 0;
+    transport.stderr?.on("data", (chunk: Buffer) => {
+      if (stderrBytes >= MAX_STDERR_BYTES) return;
+      const remaining = MAX_STDERR_BYTES - stderrBytes;
+      const slice = chunk.length > remaining ? chunk.subarray(0, remaining) : chunk;
+      chunks.push(slice);
+      stderrBytes += slice.length;
+    });
+    getStderr = (): string =>
+      Buffer.concat(chunks).toString("utf-8").trim().slice(0, STDERR_SNIPPET_BYTES);
+
+    client = new Client(
+      { name: "mcpdoctor", version: "0.1.0" },
+      { capabilities: {} }
+    );
+
+    // Race connect against timeout — transport/client remain in scope so the
+    // catch block can tear them down regardless of which side won.
+    let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      timeoutHandle = setTimeout(
+        () => reject(new Error("Connection timeout")),
+        PROBE_TIMEOUT_MS
+      );
+    });
+
+    try {
+      await Promise.race([client.connect(transport), timeoutPromise]);
+    } finally {
+      if (timeoutHandle) clearTimeout(timeoutHandle);
+    }
+
+    // Cold start: connection + first tools/list — what the user waits for on MCP client launch.
     const tools = await fetchTools(client);
     const coldStartMs = Math.round(performance.now() - t0);
 
     // Warm samples: subsequent tools/list calls with the connection already open.
-    // These represent steady-state per-call RTT during an active session.
     const warmMs: number[] = [];
     for (let i = 0; i < WARM_SAMPLES; i++) {
       const ts = performance.now();
@@ -86,6 +93,9 @@ export async function probeServer(config: MCPServerConfig): Promise<ServerProfil
     );
 
     await client.close();
+    // client.close() closes the transport as well; null out to skip redundant close in finally.
+    client = undefined;
+    transport = undefined;
 
     const status: ServerProfile["status"] =
       coldStartMs > SLOW_COLD_MS || warmLatencyMs > SLOW_WARM_MS ? "slow" : "healthy";
@@ -96,8 +106,6 @@ export async function probeServer(config: MCPServerConfig): Promise<ServerProfil
     const base = err instanceof Error ? err.message : String(err);
     const stderr = getStderr();
     const errorDetail = stderr ? `${base} -- stderr: ${stderr}` : base;
-
-    try { await client?.close(); } catch { /* transport already dead */ }
 
     if (base.includes("timeout")) {
       return {
@@ -118,6 +126,12 @@ export async function probeServer(config: MCPServerConfig): Promise<ServerProfil
       status: "error",
       error: errorDetail,
     };
+  } finally {
+    // Guaranteed cleanup: kill the child process on any exit path. client.close()
+    // also closes the transport; we call transport.close() as a belt-and-braces
+    // guard for the case where the client was created but never successfully connected.
+    try { await client?.close(); } catch { /* already dead */ }
+    try { await transport?.close(); } catch { /* already dead */ }
   }
 }
 

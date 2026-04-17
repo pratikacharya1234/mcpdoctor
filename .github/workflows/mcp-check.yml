@@ -3,16 +3,15 @@ name: MCP Health Check
 on:
   push:
     paths:
-      - '**/claude_desktop_config.json'
-      - '**/.cursor/mcp.json'
-      - '**/cline_mcp_settings.json'
-      - '**/mcp.json'
+      - "**/claude_desktop_config.json"
+      - "**/mcp.json"
+      - "**/cline_mcp_settings.json"
+      - ".github/workflows/mcp-check.yml"
   pull_request:
     paths:
-      - '**/claude_desktop_config.json'
-      - '**/.cursor/mcp.json'
-      - '**/cline_mcp_settings.json'
-      - '**/mcp.json'
+      - "**/claude_desktop_config.json"
+      - "**/mcp.json"
+      - "**/cline_mcp_settings.json"
 
 jobs:
   check:
@@ -22,15 +21,35 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Find MCP config
+        id: find
+        run: |
+          CONFIG=$(find . -type f \( \
+            -name "claude_desktop_config.json" -o \
+            -name "mcp.json" -o \
+            -name "cline_mcp_settings.json" \
+          \) -not -path "./node_modules/*" | head -n 1)
+          if [ -z "$CONFIG" ]; then
+            echo "No MCP config files found in repo; skipping."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Using config: $CONFIG"
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "config=$CONFIG" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Run MCPDoctor
+        if: steps.find.outputs.found == 'true'
+        run: npx --yes mcpdoctor --config "${{ steps.find.outputs.config }}" --json > mcp-report.json
+
+      - name: Fail on collisions
+        if: steps.find.outputs.found == 'true'
         run: |
-          npx mcpdoctor --json > mcp-report.json || true
-          cat mcp-report.json
-      - name: Check for conflicts
-        run: |
-          COLLISIONS=$(cat mcp-report.json | jq '.collisions | length')
+          COLLISIONS=$(jq '.collisions | length' mcp-report.json)
           if [ "$COLLISIONS" -gt 0 ]; then
-            echo "::warning::$COLLISIONS MCP tool name collision(s) detected"
+            echo "::error::$COLLISIONS MCP tool collision(s) detected"
+            jq '.collisions' mcp-report.json
             exit 1
           fi
-          echo "No MCP conflicts detected ✓"
+          echo "No MCP conflicts detected"
