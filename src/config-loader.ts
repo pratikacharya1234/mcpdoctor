@@ -99,7 +99,7 @@ function tryLoadConfig(source: string, paths: string[]): MCPConfig | null {
       return { source, path: configPath, servers };
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      process.stderr.write(`[mcpdoctor] Warning: could not parse ${source} config at ${configPath}: ${msg}\n`);
+      process.stderr.write(`[mcpfix] Warning: could not parse ${source} config at ${configPath}: ${msg}\n`);
     }
   }
   return null;

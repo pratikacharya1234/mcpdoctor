@@ -19,21 +19,22 @@ const { version } = _require("../package.json") as { version: string };
 const program = new Command();
 
 program
-  .name("mcpdoctor")
+  .name("mcpfix")
   .description("MCP Server Conflict Detector & Profiler")
   .version(version)
   .option("-c, --config <path>", "Custom MCP config file path")
   .option("--json", "Output as JSON (for CI/CD)")
   .option("--fix", "Interactively fix detected conflicts")
+  .option("--dry-run", "Preview fixes without writing (implies --fix)")
   .option("--roast", "Roast your MCP setup")
   .option("--budget <tokens>", "Context window token budget", "200000")
   .action(async (options) => {
     // --json and --fix together would corrupt the JSON output with interactive
     // prompts on stdout.  Fail early with a clear message.
-    if (options.json && options.fix) {
+    if (options.json && (options.fix || options.dryRun)) {
       process.stderr.write(
-        "[mcpdoctor] Error: --json and --fix cannot be used together.\n" +
-        "  Run without --json to use interactive fix mode.\n"
+        "[mcpfix] Error: --json and --fix/--dry-run cannot be used together.\n" +
+        "  Run without --json to use interactive fix or dry-run mode.\n"
       );
       process.exit(2);
     }
@@ -97,11 +98,11 @@ program
       }
 
       // 7. Fix mode — interactive, so only runs when not in JSON/CI mode
-      if (options.fix) {
+      if (options.fix || options.dryRun) {
         if (collisions.length === 0) {
           console.log("[OK] No conflicts found. Nothing to fix.\n");
         } else {
-          await interactiveFix(report);
+          await interactiveFix(report, options.dryRun);
         }
       }
 

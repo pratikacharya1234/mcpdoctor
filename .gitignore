@@ -3,8 +3,11 @@ dist/
 *.tgz
 .DS_Store
 
-# backup files written by mcpdoctor --fix
-*.mcpdoctor-backup
+# backup files written by mcpfix --fix
+*.mcpfix-backup
+
+# npm auth / publish credentials — contains _authToken
+.npmrc
 
 # logs
 npm-debug.log*

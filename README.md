@@ -1,6 +1,6 @@
-# MCPDoctor — MCP Conflict Detector
+# mcpfix — MCP Server Conflict Detector & Fixer
 
-[![npm version](https://badge.fury.io/js/mcpdoctor.svg)](https://www.npmjs.com/package/mcpdoctor)
+[![npm version](https://badge.fury.io/js/mcpfix.svg)](https://www.npmjs.com/package/mcpfix)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org)
@@ -10,13 +10,13 @@
 
 ## The Problem
 
-Running multiple MCP servers? You have collisions. Two servers exposing `create_issue` means the AI picks the wrong one, burns tokens, and fails tasks. You don't know which server is slow. You don't know how much context your tools are eating. **MCPDoctor fixes this.**
+Running multiple MCP servers? You have collisions. Two servers exposing `create_issue` means the AI picks the wrong one, burns tokens, and fails tasks. You don't know which server is slow. You don't know how much context your tools are eating. **mcpfix repairs this.**
 
 ## Architecture
 
 ```mermaid
 flowchart TD
-    A[mcpdoctor CLI] --> B[Config Loader]
+    A[mcpfix CLI] --> B[Config Loader]
     B -->|reads| C1[Claude Desktop config]
     B -->|reads| C2[Cursor mcp.json]
     B -->|reads| C3[Cline settings]
@@ -32,54 +32,20 @@ flowchart TD
     J -->|--json| L[JSON stdout]
     J -->|--roast| M[Roast Report]
     J -->|--fix| N[Fixer<br/>server-key rename + backup]
-```
-
-## Demo
-
-```
-$ npx mcpdoctor
-
-+----------------------------------------------------------+
-|    MCPDoctor -- MCP Server Conflict Detector & Profiler  |
-+----------------------------------------------------------+
-
-CONFIGS:
-  * Claude Desktop: /home/user/.config/Claude/claude_desktop_config.json
-
-LATENCY PROFILE:
-+------------+-------+------------+----------+-----------+
-| Server     | Tools | Cold Start | Warm RTT | Status    |
-+------------+-------+------------+----------+-----------+
-| github-mcp | 12    | 45ms       | 8ms      | [OK]      |
-| postgres   | 8     | 3200ms     | 420ms    | [!] slow  |
-| slack-mcp  | 6     | 320ms      | 22ms     | [OK]      |
-+------------+-------+------------+----------+-----------+
-
-CONFLICTS DETECTED:
-   EXACT  create_issue
-    Servers: github-mcp, linear-mcp
-    Fix: run --fix to rename "linear-mcp" server key, or rename tool in linear-mcp's source
-
-CONTEXT WINDOW:
-  [=========---------------------] 28%
-  Tools: 47 | Tokens: 56k / 200k
-  Risk: MODERATE
-  Remaining: ~144k tokens (~1020 more tools at avg 141 tok/tool)
-
-Summary: 5 servers, 47 tools, 3 healthy, 1 conflicts
+    J -->|--dry-run| O[Preview<br/>no writes]
 ```
 
 ## Install & Run
 
 ```bash
-npx mcpdoctor
+npx mcpfix
 ```
 
 Or install globally:
 
 ```bash
-npm install -g mcpdoctor
-mcpdoctor
+npm install -g mcpfix
+mcpfix
 ```
 
 ## Features
@@ -88,6 +54,7 @@ mcpdoctor
 - **Latency Profiling** — Measures cold-start time and steady-state warm RTT separately per server
 - **Context Window Estimation** — Calculates how much of your token budget tools consume
 - **Auto-Fix Mode** — `--fix` renames conflicting server keys in config with automatic backup
+- **Dry-Run Preview** — `--dry-run` shows exactly what `--fix` would change without touching disk
 - **Roast Mode** — `--roast` scores your MCP setup and surfaces real issues bluntly
 - **Multi-Config Support** — Auto-detects Claude Desktop, Cursor, and Cline configs
 - **CI/CD Ready** — JSON output mode (`--json`) with exit codes for pipelines
@@ -96,22 +63,25 @@ mcpdoctor
 
 ```bash
 # Auto-detect all MCP configs
-npx mcpdoctor
+npx mcpfix
 
 # Specify a custom config file
-npx mcpdoctor --config ./my-mcp-config.json
+npx mcpfix --config ./my-mcp-config.json
 
 # JSON output for CI/CD
-npx mcpdoctor --json
+npx mcpfix --json
+
+# Preview fixes without writing
+npx mcpfix --dry-run
 
 # Interactively fix conflicts
-npx mcpdoctor --fix
+npx mcpfix --fix
 
 # Roast your setup
-npx mcpdoctor --roast
+npx mcpfix --roast
 
 # Custom token budget
-npx mcpdoctor --budget 128000
+npx mcpfix --budget 128000
 ```
 
 ## Options
@@ -121,8 +91,11 @@ npx mcpdoctor --budget 128000
 | `-c, --config <path>` | Custom MCP config file path | Auto-detect |
 | `--json` | Output as JSON | false |
 | `--fix` | Rename conflicting server keys in config (with backup) | false |
+| `--dry-run` | Preview fixes without writing (implies `--fix`) | false |
 | `--roast` | Score and roast your MCP setup | false |
 | `--budget <tokens>` | Context window token budget | 200000 |
+
+`--json` cannot be combined with `--fix` or `--dry-run` (interactive output would corrupt the JSON stream).
 
 ## Exit Codes
 
@@ -130,11 +103,11 @@ npx mcpdoctor --budget 128000
 |------|---------|
 | 0 | All servers healthy, no conflicts |
 | 1 | Errors or conflicts detected |
-| 2 | Fatal error |
+| 2 | Fatal error or invalid flag combination |
 
 ## Config Detection
 
-MCPDoctor automatically finds configs from:
+mcpfix automatically finds configs from:
 
 - **Claude Desktop** — `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS), `%APPDATA%/Claude/` (Windows), `~/.config/Claude/` (Linux)
 - **Cursor** — `~/.cursor/mcp.json`
@@ -154,10 +127,16 @@ The fuzzy pass catches near-identical names (`create_issue` / `create-issue`, `l
 
 `--fix` renames the *server key* in your MCP config file for the secondary server in each exact collision. This makes the host-side entry distinct without breaking the server process.
 
-**What it changes:** the key name under `mcpServers` in the JSON config.  
+**What it changes:** the key name under `mcpServers` in the JSON config.
 **What it does not change:** the tool names the server process advertises over stdio — those must be changed in the server's source code or via a proxy wrapper.
 
-A `.mcpdoctor-backup` file is written alongside the config before any modifications.
+A `.mcpfix-backup` file is written alongside the config before any modifications. To roll back:
+
+```bash
+mv claude_desktop_config.json.mcpfix-backup claude_desktop_config.json
+```
+
+Use `--dry-run` first to preview the exact rename set without writing.
 
 ## Context Window Estimation
 
@@ -191,7 +170,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npx mcpdoctor --json > mcp-report.json
+      - run: npx --yes mcpfix --json > mcp-report.json
       - name: Fail on collisions
         run: |
           COLLISIONS=$(jq '.collisions | length' mcp-report.json)

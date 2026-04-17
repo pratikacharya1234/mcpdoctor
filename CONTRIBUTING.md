@@ -1,4 +1,4 @@
-# Contributing to MCPDoctor
+# Contributing to mcpfix
 
 Thanks for taking the time to contribute. This document covers everything you need to go from idea to merged PR.
 
@@ -41,8 +41,8 @@ Be direct, be technical, be respectful. Criticism of code is welcome; personal c
 **Requirements:** Node.js >= 18, npm >= 9
 
 ```bash
-git clone https://github.com/pratikacharya1234/mcpdoctor.git
-cd mcpdoctor
+git clone https://github.com/pratikacharya1234/mcpdoctor.git mcpfix
+cd mcpfix
 npm install
 npm run build       # compile TypeScript -> dist/
 npm run lint        # tsc --noEmit (type check only)
@@ -87,7 +87,7 @@ src/
 
 Use [GitHub Issues](../../issues). Include:
 
-1. **mcpdoctor version** — `npx mcpdoctor --version`
+1. **mcpfix version** — `npx mcpfix --version`
 2. **Node.js version** — `node --version`
 3. **OS and MCP client** (Claude Desktop / Cursor / Cline / custom)
 4. **Command you ran** and the **full output** (redact sensitive paths if needed)

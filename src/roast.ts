@@ -166,7 +166,7 @@ export function renderRoast(report: DoctorReport): string {
 
   const fixCount = report.collisions.filter((c) => c.type === "exact").length;
   if (fixCount > 0) {
-    lines.push(chalk.gray(`\n  Fix these ${fixCount} issue(s) to reach next tier. Run: ${chalk.bold("mcpdoctor --fix")}`));
+    lines.push(chalk.gray(`\n  Fix these ${fixCount} issue(s) to reach next tier. Run: ${chalk.bold("mcpfix --fix")}`));
   }
 
   lines.push("");

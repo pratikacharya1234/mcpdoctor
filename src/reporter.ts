@@ -125,7 +125,7 @@ export function renderReport(report: DoctorReport): string {
 
   sections.push(
     boxen(
-      chalk.bold.cyan(" MCPDoctor ") + chalk.gray("-- MCP Server Conflict Detector & Profiler"),
+      chalk.bold.cyan(" MCPFix ") + chalk.gray("-- MCP Server Conflict Detector & Profiler"),
       { padding: 1, borderColor: "cyan", borderStyle: "round" }
     )
   );

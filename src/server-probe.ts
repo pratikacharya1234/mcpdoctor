@@ -57,7 +57,7 @@ export async function probeServer(config: MCPServerConfig): Promise<ServerProfil
       Buffer.concat(chunks).toString("utf-8").trim().slice(0, STDERR_SNIPPET_BYTES);
 
     client = new Client(
-      { name: "mcpdoctor", version: "0.1.0" },
+      { name: "mcpfix", version: "0.1.0" },
       { capabilities: {} }
     );
 

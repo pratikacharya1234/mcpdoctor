@@ -39,9 +39,9 @@ jobs:
             echo "config=$CONFIG" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Run MCPDoctor
+      - name: Run MCPFix
         if: steps.find.outputs.found == 'true'
-        run: npx --yes mcpdoctor --config "${{ steps.find.outputs.config }}" --json > mcp-report.json
+        run: npx --yes mcpfix --config "${{ steps.find.outputs.config }}" --json > mcp-report.json
 
       - name: Fail on collisions
         if: steps.find.outputs.found == 'true'
